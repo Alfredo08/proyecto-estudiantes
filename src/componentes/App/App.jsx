@@ -9,7 +9,7 @@ const App = () => {
 
   useEffect(() => {
     const cargarListaDeEstudiantes = async() => {
-      const URL = 'http://localhost:8080/estudiante';
+      const URL = 'https://servidor-estudiantes.onrender.com/estudiante';
       const respuesta = await axios(URL);
       setListaEstudiantes(respuesta.data);
     }
