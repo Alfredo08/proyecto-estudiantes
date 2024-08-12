@@ -1,23 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Estudiante from "../Estudiante/Estudiante";
 import FormularioEstudiante from "../FormularioEstudiante/FormularioEstudiante";
+import axios from 'axios';
 
 const App = () => {
-  const estudiantesIniciales = [{
-    nombre: "Alex",
-    apellido: "Miller",
-    edad: 25,
-    curso: "MERN"
-  },
-  {
-    nombre: "Martha",
-    apellido: "Gómez",
-    edad: 23,
-    curso: "Fundamentos de la Web"
-  }];
 
-  const [listaEstudiantes, setListaEstudiantes] = useState(estudiantesIniciales);
+  const [listaEstudiantes, setListaEstudiantes] = useState([]);
 
+  useEffect(() => {
+    const cargarListaDeEstudiantes = async() => {
+      const URL = 'http://localhost:8080/estudiante';
+      const respuesta = await axios(URL);
+      setListaEstudiantes(respuesta.data);
+    }
+
+    cargarListaDeEstudiantes();
+  });
   const actualizarListaEstudiantes = (nuevoEstudiante) => {
     setListaEstudiantes([...listaEstudiantes, nuevoEstudiante]);
   }
@@ -38,8 +36,9 @@ const App = () => {
       <FormularioEstudiante actualizarListaEstudiantes={actualizarListaEstudiantes} />
       <h2> Lista de estudiantes </h2>
       {
-        listaEstudiantes.map((estudiante) => {
-          return (<Estudiante nombre={estudiante.nombre}
+        listaEstudiantes.map((estudiante, indice) => {
+          return (<Estudiante key={indice}
+                              nombre={estudiante.nombre}
                               apellido={estudiante.apellido}
                               edad={estudiante.edad}
                               curso={estudiante.curso}
