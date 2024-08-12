@@ -15,7 +15,7 @@ const App = () => {
     }
 
     cargarListaDeEstudiantes();
-  });
+  }, []);
   const actualizarListaEstudiantes = (nuevoEstudiante) => {
     setListaEstudiantes([...listaEstudiantes, nuevoEstudiante]);
   }
